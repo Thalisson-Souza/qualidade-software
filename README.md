@@ -27,7 +27,6 @@ Nesta etapa, foram executados testes de integração para validar as regras de n
 | **3** | Validar existência de placa                     | Confirma que a placa **HZT-7130** existe no banco.                         |
 | **4** | Testar busca de vaga inexistente por ID         | Verifica que buscar o ID `9999` retorna um `Optional` vazio.               |
 | **5** | Buscar vaga por nome do responsável             | Busca a vaga da responsável **Marcos Oliveira** e ve seu retorno.          |
-| **6** | Criar uma nova vaga com sucesso                 | Cria nova vaga **E-01** e confirma que foi corretamente no banco.          |
 
 
 Os testes desenvolvidos podem ser acessados diretamente no repositório:
