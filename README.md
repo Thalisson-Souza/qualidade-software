@@ -1,134 +1,42 @@
- # Parking Control API
- 
-![Static Badge](https://img.shields.io/badge/Java-v17-blue.svg) 
-![Static Badge](https://img.shields.io/badge/SpringBoot-3.4.2-green.svg) 
-![Static Badge](https://img.shields.io/badge/Jpa-3.4.2-orange.svg)
-![Static Badge](https://img.shields.io/badge/Validation-3.4.2-yellow.svg) 
-![Static Badge](https://img.shields.io/badge/MapStruct-1.5.3-8E44AD.svg) 
+**Sobre o projeto usado:** Um sistema sistema para gerenciar reservas, ocupação e liberação de vagas de estacionamento, desenvolvido com Java, Spring Boot e PostgreSQL. Contando criação, atualização e remoção de vagas.
+
+obs: Ao executar projeto ele já insere dados exemplos para os testes no banco.
 
 
-Este projeto é um sistema de gerenciamento de vagas de estacionamento desenvolvido com **Java** e **Spring Boot**. 
-O objetivo é aplicar os conhecimentos adquiridos e construir uma solução para gerenciar reservas e liberação de vagas, 
-utilizando **MySQL** para armazenamento e **Docker** para facilitar a execução dos serviços.
+3. **Configurar o Banco de Dados**
 
-- **MySQL**: Armazena os dados das vagas e reservas.
-- **Docker**: Facilita o gerenciamento e execução da aplicação.
-- **Validation**: Garante a integridade dos dados nas requisições.
-- **MapStruct**: Facilita o mapeamento entre entidades e DTOs.
-- **JPA:** Gerencia a persistência de dados com o banco.
-
-## **Instalação** 
-
-1. Clone o repositório: e acesse a pasta do projeto:
-```bash
-git clone https://github.com/Thalisson-Souza/parking-control
-cd nome-do-repositorio
-```
-
-
-2. **Instale as dependências necessárias** 
-```bash 
-./mvnw clean package
-```
-
-
-3. **Configure o Banco de Dados**  
-
-Executando localmente com **MySQL**
+Executando localmente com **PostgreSQL**
 
 - Edite o arquivo `application.properties`:
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/"seu_banco_de_dados"
-spring.datasource.username= "seu_user"
-spring.datasource.password= "sua_passoword"
-```
-  
-Executando com **MySQL** via **Docker**
-
-- Edite o arquivo `docker-compose.yaml`:
-```yaml
-'MYSQL_DATABASE= "seu_banco_de_dados"'
-'MYSQL_PASSWORD= "sua_password"'
-'MYSQL_ROOT_PASSWORD= "sua_password"'
-'MYSQL_USER= "seu_user"'
-```
-
-**Nota:**  Use os mesmos valores de `MYSQL_USER` e `MYSQL_PASSWORD` no 
-`docker-compose.yaml` e no `application.properties` para evitar problemas de conexão.
-
-
-- Para iniciar o container com o **Docker**, execute o comando `docker-compose up` no diretório do projeto: 
-
-```bash
-docker-compose up 
-```
-
-4. **Execute o projeto** 
-```bash
-mvn spring-boot::run
-```
-
-## Endpoints da API
-
-| Método  | Endpoint                | Descrição                                |
-|---------|-------------------------|------------------------------------------|
-| `GET`   | `/parking-spot`          | Lista todas as vagas do estacionamento.  |
-| `POST`  | `/parking-spot`          | Cria uma nova vaga de estacionamento.    |
-| `PUT`   | `/parking-spot/{id}`     | Atualiza os dados de uma vaga existente. |
-| `DELETE` | `/parking-spot/{id}`   | Deleta uma vaga especificada por ID.       
-
-
-### Exemplo de Requisição 
-
-- **POST** 
-
-Criação de uma vaga de estacionamento:
-
-```json
-{
-  "parkingSpotNumber": "NUMERO_DA_VAGA",
-  "responsibleName": "RESPONSAVEL_PELA_VAGA",
-  "block": "BLOCO_DA_VAGA",
-  "car": {
-    "plateCar": "PLACA_DO_CARRO",
-    "modelCar": "MODELO_CARRO",
-    "colorCar": "COR_CARRO"
-  }
-}
-```
-
-- **PUT**
-    - Endpoint: `/parking-spot/{id}`
-    - Campos permitidos a atualização: `responsibleName, modelCar, plateCar, colorCar`
-
-Atualização de dados de uma vaga existente:
-```json
-{
-  "parkingSpotNumber": "",
-  "responsibleName": "ATUALIZE_NOME",
-  "block": "",
-  "car": {
-    "plateCar": "ATUALIZE_PLACA",
-    "modelCar": "ATUALIZE_MODELO",
-    "colorCar": "ATUALIZE_COR"
-  }
-}
+spring.datasource.url=jdbc:postgresql://localhost:5432/parking-control-db
+spring.datasource.username=<USERNAME>
+spring.datasource.password=<PASSWORD>
 ```
 
 
-- **GET**
-  - `/parking-spot` - Lista todas as vagas.
-  - `/parking-spot/{id}` - Busca vaga por ID.
-  - `/parking-spot/name/{name}` - Busca vaga pelo nome do responsável.
-  - `/parking-spot/by-number/{spot-number}` - Busca vaga pelo número da vaga.
+### Testes Realizados
 
-  
+Nesta etapa, foram executados testes de integração para validar as regras de negócio e a comunicação entre o serviço e o banco de dados PostgreSQL.
 
-- **DELETE**
+| Teste | O que faz                                       | Descrição                                                                  |
+| :--- |:------------------------------------------------|:---------------------------------------------------------------------------|
+| **1** | Verificar se o Spring carregou o Service        | Valida que o Spring inicializou certo e o ParkingSpotService foi injetado. |
+| **2** | Verificar se existem vagas cadastradas no banco | Garante que a lista retornada pelo `findAll()` não está vazia.             |
+| **3** | Validar existência de placa                     | Confirma que a placa **HZT-7130** existe no banco.                         |
+| **4** | Testar busca de vaga inexistente por ID         | Verifica que buscar o ID `9999` retorna um `Optional` vazio.               |
+| **5** | Buscar vaga por nome do responsável             | Busca a vaga da responsável **Marcos Oliveira** e ve seu retorno.          |
+| **6** | Criar uma nova vaga com sucesso                 | Cria nova vaga **E-01** e confirma que foi corretamente no banco.          |
 
-Remoção de uma vaga por ID:
-  - Endpoint: `/parking-spot/{id}`
+
+Os testes desenvolvidos podem ser acessados diretamente no repositório:
+👉 [Acessar pasta de testes](https://github.com/seu-usuario/seu-repo/tree/main/src/test/java/com/seuprojeto/parkingcontrol)
+
+
+Resultado dos testes: 
+![img.png](img.png)
+
 
 
 
