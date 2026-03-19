@@ -31,7 +31,7 @@ Nesta etapa, foram executados testes de integração para validar as regras de n
 
 
 Os testes desenvolvidos podem ser acessados diretamente no repositório:
-👉 [Acessar pasta de testes](https://github.com/seu-usuario/seu-repo/tree/main/src/test/java/com/seuprojeto/parkingcontrol)
+👉 [Acessar pasta de testes](https://github.com/Thalisson-Souza/qualidade-software/blob/master/src/test/java/com/api/parking_control/ParkingControlApplicationTests.java)
 
 
 Resultado dos testes: 
